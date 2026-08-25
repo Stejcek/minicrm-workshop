@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id        String    @id @default(cuid())
+  name      String
+  website   String?
+  industry  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  contacts Contact[]
+
+  @@index([name])
+}
+
+model Contact {
+  id            String     @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String
+  phone         String?
+  companyId     String?
+  status        String     @default("NEW")
+  nextContactAt DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  company       Company?   @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  activities    Activity[]
+
+  @@index([companyId])
+  @@index([status])
+  @@index([nextContactAt])
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  contactId  String
+  type       String
+  text       String
+  occurredAt DateTime
+  createdAt  DateTime @default(now())
+  contact    Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([contactId, occurredAt])
+}

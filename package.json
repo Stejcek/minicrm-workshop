@@ -1,0 +1,40 @@
+{
+  "name": "minicrm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Malé výukové CRM pro praktické školení práce s vývojovým agentem.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "crm": "node scripts/minicrm-tui.mjs",
+    "build": "npm run build --workspace @minicrm/shared && npm run build --workspace @minicrm/api && npm run build --workspace @minicrm/web",
+    "test": "npm run test:tui && npm run build --workspace @minicrm/shared && npm run test --workspace @minicrm/shared && npm run test --workspace @minicrm/api && npm run test --workspace @minicrm/web",
+    "test:tui": "node --test scripts/lib/minicrm-process.test.mjs",
+    "lint": "eslint .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "npm run build --workspace @minicrm/shared && npm run typecheck --workspace @minicrm/api && npm run typecheck --workspace @minicrm/web",
+    "db:generate": "npm run db:generate --workspace @minicrm/api",
+    "db:migrate": "npm run db:migrate --workspace @minicrm/api",
+    "db:seed": "npm run db:seed --workspace @minicrm/api",
+    "db:reset": "node scripts/reset-database.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/node": "^22.18.0",
+    "eslint": "^9.34.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0"
+  },
+  "engines": {
+    "node": ">=22 <23"
+  }
+}
