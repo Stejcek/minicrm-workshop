@@ -1,0 +1,8 @@
+# Projektová konfigurace Codexu pro workshop.
+# Volba modelu se záměrně dědí z hlavního běhu, aby konfigurace fungovala
+# napříč schválenými tarify i budoucími aktualizacemi modelů.
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
+interrupt_message = true

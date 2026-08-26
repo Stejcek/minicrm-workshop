@@ -16,3 +16,6 @@ var/*.pid.json.tmp
 var/*.heartbeat.json
 var/*.heartbeat.json.*.tmp
 !var/.gitkeep
+
+# Local instructor-only workshop materials. Never commit this directory.
+/workshop/instructor/

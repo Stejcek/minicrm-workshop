@@ -59,4 +59,5 @@ npm run crm -- reset --yes
 - [`templates/ai-assisted-dod.md`](templates/ai-assisted-dod.md) – Definition of Done
 - [`templates/adr.md`](templates/adr.md) – stručný záznam architektonického rozhodnutí
 - [`roles.md`](roles.md) – příspěvky analytika, architekta a designéra
+- [`agents.md`](agents.md) – katalog projektových subagentů a bezpečné scénáře delegace
 - [`../docs/security.md`](../docs/security.md) – bezpečnostní hranice projektu

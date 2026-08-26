@@ -50,6 +50,9 @@ The expected repository structure is:
 ├── package-lock.json
 ├── .nvmrc
 ├── .env.example
+├── .codex/
+│   ├── config.toml
+│   └── agents/
 ├── apps/
 │   ├── api/
 │   │   ├── prisma/
@@ -96,6 +99,17 @@ The expected repository structure is:
 
 Workshop instructions, task templates, and role guidance live in `workshop/`. Security boundaries are documented in `docs/security.md`; the UI baseline is in `docs/ui.md`.
 
+## Project subagents
+
+Reusable Codex roles are versioned in `.codex/agents/`; their orchestration guide is in `workshop/agents.md`. The profiles intentionally inherit the parent model so the workshop is not tied to a particular account or short-lived model name.
+
+- `repository_mapper`, `business_analyst`, `solution_architect`, and `ux_designer` gather bounded read-only evidence before a decision or implementation.
+- `implementer` is the only role allowed to edit source files for an approved task.
+- `verification_runner` may create normal ignored test/build artifacts but must not edit source files or fix failures.
+- `test_critic`, `code_reviewer`, and `security_reviewer` perform independent read-only review and never approve their own findings.
+
+Do not spawn subagents by default. Use them only when the user or task explicitly requests delegation and the work divides into genuinely independent, bounded responsibilities. Run at most one `implementer` at a time, never give two agents overlapping write ownership, and wait for all delegated results before the primary agent synthesizes decisions. The primary agent remains responsible for conflicts, final verification, the complete diff, and human handoff.
+
 ## Commands
 
 - Install: `npm ci`
@@ -118,6 +132,7 @@ Workshop instructions, task templates, and role guidance live in `workshop/`. Se
 - Use Prisma migrations for every schema change. Demo seed identifiers must stay stable and idempotent.
 - Prefer small components and direct code over generic frameworks or speculative abstractions.
 - Keep local process management in dependency-free Node.js scripts under `scripts/`; runtime PID and log files belong in `var/` and must stay ignored.
+- Keep project subagent profiles narrow and role-based in `.codex/agents/`. Do not place secrets, personal paths, production endpoints, or instructor-only instructions in tracked agent files.
 - Duplicate contact e-mail addresses are intentionally allowed in this starter version.
 
 ## Role contributions
